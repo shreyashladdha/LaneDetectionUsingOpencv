@@ -72,35 +72,43 @@ def process(image):
     #plt.show()
 
 
-
+cascade_src= 'cars.xml'
 cap=cv2.VideoCapture('solidWhiteRight.mp4')
+car_cascade=cv2.CascadeClassifier(cascade_src)
 while(cap.isOpened()):
     ret, frame = cap.read()
     if ret == True:
         frame=process(frame)
-        cv2.imshow('Frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+       # gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+        cars=car_cascade.detectMultiScale(frame,1.09,8)
+        for(x,y,w,h) in cars:
+            cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,0),4)
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            # cv2.putText(frame,(x+w,y+h),(140,250), font, .5,(255,255,255),2,cv2.LINE_AA)
+            cv2.imshow('Frame', frame)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
     else:
         break
+
     
 cap.release()
 cv2.destroyAllWindows()
 
 
-cap=cv2.VideoCapture('solidYellowLeft.mp4')
-while(cap.isOpened()):
-    ret, frame = cap.read()
-    if ret == True:
-        frame=process(frame)
-        cv2.imshow('Frame', frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-    else:
-        break
+# cap=cv2.VideoCapture('solidYellowLeft.mp4')
+# while(cap.isOpened()):
+#     ret, frame = cap.read()
+#     if ret == True:
+#         frame=process(frame)
+#         cv2.imshow('Frame', frame)
+#         if cv2.waitKey(1) & 0xFF == ord('q'):
+#             break
+#     else:
+#         break
     
-cap.release()
-cv2.destroyAllWindows()
+# cap.release()
+# cv2.destroyAllWindows()
 # image=cv2.imread('Dataset by video recorder/Daytime/beltway/1535.jpg')
 # image=process(image)
 # plt.imshow(image)
