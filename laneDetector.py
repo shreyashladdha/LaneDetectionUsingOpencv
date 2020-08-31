@@ -10,6 +10,7 @@ canny_Image=0
 Roi_image=0
 Image_with_lines=0
 
+
 def region_of_interest(img, vertices):
         mask=np.zeros_like(img)
         Mask=mask
@@ -18,6 +19,7 @@ def region_of_interest(img, vertices):
         masked_image=cv2.bitwise_and(img,mask)
         Masked_image=masked_image
         return masked_image
+
 
 def draw_lines(img,lines):
     img_new=np.copy(img)
@@ -29,6 +31,7 @@ def draw_lines(img,lines):
     img= cv2.addWeighted(img,0.8,line_image,1,0.0)
     return img
         
+
 def process(image):
     if image is None:
         return image
@@ -54,9 +57,7 @@ def process(image):
         return image
 
 
-cascade_src= 'cars.xml'
 cap=cv2.VideoCapture('solidWhiteRight.mp4')
-car_cascade=cv2.CascadeClassifier(cascade_src)
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
 out = cv2.VideoWriter('output.avi', fourcc, 20.0, (960,613))
 while(cap.isOpened()):
@@ -69,7 +70,6 @@ while(cap.isOpened()):
     else:
         break
 
-    
 cap.release()
 out.release()
 cv2.destroyAllWindows()
